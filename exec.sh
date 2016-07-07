@@ -23,10 +23,10 @@ if [ "$?" -ne 0 ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-which bundle > /dev/null || gem install bundler
-bundle install > /dev/null
+sudo gem install bundler > /dev/null
+sudo bundle install > /dev/null
 
-bundle exec serverkit apply recipe.yml.erb --variables=variables.yml
+sudo bundle exec serverkit apply recipe.yml.erb --variables=variables.yml
 
 popd > /dev/null
 
