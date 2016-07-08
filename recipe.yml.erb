@@ -14,7 +14,8 @@ resources:
     version: 2.3.1
     global: true
   - type: command
+    checkscript: ! cat /etc/shells | grep /usr/local/bin/zsh
     script: echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
   - type: command
-    check_script: "finger -l | grep -E '/bin/zsh$'"
+    check_script: finger -l | grep -E '/usr/local/bin/zsh$'
     script: sudo chsh -s /usr/local/bin/zsh <%= ENV["USER"] %>
