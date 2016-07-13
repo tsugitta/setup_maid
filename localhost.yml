@@ -1,0 +1,125 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no           
+  sudo: no
+  vars:
+    homebrew_taps:
+      - homebrew/binary
+      - homebrew/dupes
+      - caskroom/cask
+      - railwaycat/emacsmacport
+      - sanemat/font
+    homebrew_packages:
+      - { name: ansible }
+      - { name: cmake }
+      - { name: coreutils }
+      - { name: ctags }
+      - { name: direnv }
+      - { name: git }
+      - { name: git-flow }
+      - { name: go }
+      - { name: imagemagick }
+      - { name: lua }
+      - { name: macvim }
+      - { name: mysql }
+      - { name: node }
+      - { name: openssl }
+      - { name: peco }
+      - { name: pyenv}
+      - { name: rbenv }
+      - { name: readline }
+      - { name: reattach-to-user-namespace }
+      - { name: redis }
+      - { name: ricty, install_options: --vim-powerline }
+      - { name: ruby-build }
+      - { name: sqlite }
+      - { name: tig }
+      - { name: tmux }
+      - { name: tree }
+      - { name: vim, install_options: --with-lua }
+      - { name: zsh }
+    homebrew_cask_packages:
+      - { name: adobe-reader }
+      - { name: alfred }
+      - { name: aquaterm }
+      - { name: caffeine }
+      - { name: clipmenu }
+      - { name: flux }
+      - { name: google-chrome }
+      - { name: google-drive }
+      - { name: google-japanese-ime }
+      - { name: iterm2 }
+      - { name: karabiner }
+      - { name: kobito }
+      - { name: night-owl }
+      - { name: rdm }
+      - { name: realm-browser }
+      - { name: sequel-pro }
+      - { name: simpholeders }
+      - { name: sketch }
+      - { name: skitch }
+      - { name: slack }
+      - { name: sourcetree }
+      - { name: spectacle }
+      - { name: sublime-text }
+      - { name: vagrant }
+      - { name: virtualbox }
+  tasks:
+    - name: Homebrew - tap
+      homebrew_tap: tap={{ item }} state=present
+      with_items: homebrew_taps
+
+    - name: Homebrew - update
+      homebrew: update_homebrew=yes
+
+    # brew
+    - name: Homebrew - install
+      homebrew: >
+        name={{ item.name }}
+        state={{ item.state | default('latest') }}
+        install_options={{
+          item.install_options | default() | join(',')
+          if item.install_options is not string
+          else item.install_options
+        }}
+      with_items: homebrew_packages
+      register: brew_result
+    - name: Create brew packages directories
+      file: path=brew_info state=directory
+    - name: Save brew packages
+      shell: brew info {{ item }} > brew_info/{{ item }}
+      with_items: brew_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
+
+    # cask
+    - name: Install homebrew-cask
+      homebrew: name=brew-cask state=latest
+    - name: Install homebrew-cask packages
+      homebrew_cask: name={{ item.name }} state={{ item.state|default('installed') }}
+      with_items: homebrew_cask_packages
+      register: cask_result
+    - name: Create cask packages directories
+      file: path=cask_info state=directory
+    - name: Save cask packages
+      shell: brew cask info {{ item }} > cask_info/{{ item }}
+      with_items: cask_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
+
+    # oh-my-zsh
+    - name: Install oh-my-zsh
+      shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+      args:
+        creates: ~/.oh-my-zsh/
+
+    # Ricty
+    - name: Copy the installed Ricty fonts 
+      shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
+      args:
+        creates: ~/Library/Fonts/Ricty-Bold.ttf
+      notify: run fc-cache
+    
+    # Powerline
+    - name: Install Powerline
+      shell: pip install --user powerline-status
+
+  handlers:
+    - name: run fc-cache
+      shell: fc-cache -vf

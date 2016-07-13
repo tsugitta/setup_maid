@@ -23,10 +23,12 @@ if [ "$?" -ne 0 ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-sudo gem install bundler
-sudo bundle install
+brew update
 
-sudo bundle exec serverkit apply recipe.yml.erb --variables=variables.yml
+brew install python
+brew install ansible
+
+HOMEBREW_CASK_OPTS="--appdir=/Applications" ansible-playbook -i hosts -vv localhost.yml
 
 popd > /dev/null
 
