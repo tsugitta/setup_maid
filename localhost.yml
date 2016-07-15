@@ -11,6 +11,7 @@
       - sanemat/font
     homebrew_packages:
       - { name: ansible }
+      - { name: carthage }
       - { name: cmake }
       - { name: coreutils }
       - { name: ctags }
