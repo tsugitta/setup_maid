@@ -30,7 +30,7 @@
       - { name: readline }
       - { name: reattach-to-user-namespace }
       - { name: redis }
-      - { name: ricty, install_options: --vim-powerline }
+      - { name: ricty, install_options: 'vim-powerline' }
       - { name: ruby-build }
       - { name: sqlite }
       - { name: tig }
