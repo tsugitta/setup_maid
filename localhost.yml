@@ -22,7 +22,6 @@
       - { name: go }
       - { name: imagemagick }
       - { name: lua }
-      - { name: macvim, install_options: 'with-lua', 'override-system-vim' }
       - { name: mysql }
       - { name: node }
       - { name: nvm }
@@ -37,11 +36,13 @@
       - { name: ricty, install_options: 'vim-powerline' }
       - { name: ruby-build }
       - { name: sqlite }
+      - { name: swiftlint }
       - { name: tig }
       - { name: tmux }
       - { name: tree }
-      - { name: vim, install_options: 'with-lua', 'override-system-vim' }
       - { name: zsh }
+      - { name: vim, install_options: 'with-lua', 'override-system-vim' }
+      - { name: macvim, install_options: 'with-lua', 'override-system-vim' }
     homebrew_cask_packages:
       - { name: adobe-reader }
       - { name: alfred }
