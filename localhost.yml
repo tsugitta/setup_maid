@@ -6,6 +6,7 @@
     homebrew_taps:
       - homebrew/binary
       - homebrew/dupes
+      - homebrew/services
       - caskroom/cask
       - railwaycat/emacsmacport
       - sanemat/font
@@ -27,6 +28,7 @@
       - { name: nvm }
       - { name: openssl }
       - { name: peco }
+      - { name: postgresql }
       - { name: pyenv}
       - { name: rbenv }
       - { name: readline }
@@ -117,3 +119,7 @@
 
     - name: Install npm
       shell: curl -L https://www.npmjs.com/install.sh | sh
+
+    - name: Auto launch postgre and maysql
+      shell: brew services start postgresql
+      shell: brew services start mysql
