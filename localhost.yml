@@ -20,7 +20,7 @@
       - { name: go }
       - { name: imagemagick }
       - { name: lua }
-      - { name: macvim }
+      - { name: macvim, install_options: 'with-lua', 'override-system-vim' }
       - { name: mysql }
       - { name: node }
       - { name: openssl }
@@ -36,7 +36,7 @@
       - { name: tig }
       - { name: tmux }
       - { name: tree }
-      - { name: vim, install_options: --with-lua }
+      - { name: vim, install_options: 'with-lua', 'override-system-vim' }
       - { name: zsh }
     homebrew_cask_packages:
       - { name: adobe-reader }
