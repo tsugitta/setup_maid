@@ -71,7 +71,6 @@
     - name: Homebrew - update
       homebrew: update_homebrew=yes
 
-    # brew
     - name: Homebrew - install
       homebrew: >
         name={{ item.name }}
@@ -89,7 +88,6 @@
       shell: brew info {{ item }} > brew_info/{{ item }}
       with_items: brew_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
 
-    # cask
     - name: Install homebrew-cask
       homebrew: name=brew-cask state=latest
     - name: Install homebrew-cask packages
@@ -102,23 +100,19 @@
       shell: brew cask info {{ item }} > cask_info/{{ item }}
       with_items: cask_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
 
-    # oh-my-zsh
     - name: Install oh-my-zsh
       shell: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
       args:
         creates: ~/.oh-my-zsh/
 
-    # Ricty
     - name: Copy the installed Ricty fonts 
       shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
       args:
         creates: ~/Library/Fonts/Ricty-Bold.ttf
       notify: run fc-cache
     
-    # Powerline
     - name: Install Powerline
       shell: pip install --user powerline-status
 
-  handlers:
-    - name: run fc-cache
-      shell: fc-cache -vf
+    - name: Install npm
+      shell: curl -L https://www.npmjs.com/install.sh | sh
