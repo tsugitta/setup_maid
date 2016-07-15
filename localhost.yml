@@ -23,6 +23,7 @@
       - { name: macvim, install_options: 'with-lua', 'override-system-vim' }
       - { name: mysql }
       - { name: node }
+      - { name: nvm }
       - { name: openssl }
       - { name: peco }
       - { name: pyenv}
