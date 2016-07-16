@@ -36,6 +36,7 @@
       - { name: ricty, install_options: 'vim-powerline' }
       - { name: ruby-build }
       - { name: sqlite }
+      - { name: the_silver_searcher }
       - { name: swiftlint }
       - { name: tig }
       - { name: tmux }
