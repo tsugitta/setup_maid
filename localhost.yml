@@ -33,7 +33,6 @@
       - { name: readline }
       - { name: reattach-to-user-namespace }
       - { name: redis }
-      - { name: ricty, install_options: 'vim-powerline' }
       - { name: ruby-build }
       - { name: sqlite }
       - { name: the_silver_searcher }
@@ -110,12 +109,6 @@
       args:
         creates: ~/.oh-my-zsh/
 
-    - name: Copy the installed Ricty fonts 
-      shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
-      args:
-        creates: ~/Library/Fonts/Ricty-Bold.ttf
-      notify: run fc-cache
-    
     - name: Install Powerline
       shell: pip install --user powerline-status
 
