@@ -1,6 +1,6 @@
 - hosts: localhost
   connection: local
-  gather_facts: no           
+  gather_facts: no
   sudo: no
   vars:
     homebrew_taps:
@@ -11,6 +11,7 @@
       - railwaycat/emacsmacport
       - sanemat/font
     homebrew_packages:
+      - { name: android-ndk}
       - { name: ansible }
       - { name: carthage }
       - { name: cmake }
@@ -23,10 +24,12 @@
       - { name: imagemagick }
       - { name: lua }
       - { name: mysql }
+      - { name: nkf }
       - { name: node }
       - { name: nvm }
       - { name: openssl }
       - { name: peco }
+      - { name: phantomjs }
       - { name: postgresql }
       - { name: pyenv}
       - { name: rbenv }
