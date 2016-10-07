@@ -18,9 +18,12 @@
       - { name: coreutils }
       - { name: ctags }
       - { name: direnv }
+      - { name: flow }
       - { name: git }
       - { name: git-flow }
+      - { name: git-lfs }
       - { name: go }
+      - { name: hub }
       - { name: imagemagick }
       - { name: lua }
       - { name: mysql }
@@ -43,6 +46,7 @@
       - { name: tig }
       - { name: tmux }
       - { name: tree }
+      - { name: watchman }
       - { name: zsh }
       - { name: vim, install_options: 'with-lua', 'override-system-vim' }
       - { name: macvim, install_options: 'with-lua', 'override-system-vim' }
